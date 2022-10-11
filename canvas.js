@@ -12,13 +12,21 @@ let isPainting = false;
 ctx.lineWidth = 4;
 ctx.lineCap = "round";
 
-// 取得滑鼠在畫布上的位置
-function getMousePosition(e) {
+// 取得滑鼠 / 手指在畫布上的位置
+function getPaintPosition(e) {
   const canvasSize = canvas.getBoundingClientRect();
-  return {
-    x: e.clientX - canvasSize.left,
-    y: e.clientY - canvasSize.top,
-  };
+
+  if (e.type === "mousemove") {
+    return {
+      x: e.clientX - canvasSize.left,
+      y: e.clientY - canvasSize.top,
+    };
+  } else {
+    return {
+      x: e.touches[0].clientX - canvasSize.left,
+      y: e.touches[0].clientY - canvasSize.top,
+    };
+  }
 }
 
 // 開始繪圖時，將狀態開啟
@@ -39,10 +47,10 @@ function draw(e) {
   if (!isPainting) return;
 
   // 取得滑鼠位置
-  const mousePosition = getMousePosition(e);
+  const paintPosition = getPaintPosition(e);
 
   // 移動到滑鼠位置並產生圖案
-  ctx.lineTo(mousePosition.x, mousePosition.y);
+  ctx.lineTo(paintPosition.x, paintPosition.y);
   ctx.stroke();
 }
 
