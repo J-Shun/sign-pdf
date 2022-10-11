@@ -50,8 +50,10 @@ document.querySelector("input").addEventListener("change", async (e) => {
   canvas.requestRenderAll();
   const pdfData = await printPDF(e.target.files[0]);
   const pdfImage = await pdfToImage(pdfData);
-  canvas.setWidth(pdfImage.width);
-  canvas.setHeight(pdfImage.height);
+
+  // 調整canvas大小
+  canvas.setWidth(pdfImage.width / window.devicePixelRatio);
+  canvas.setHeight(pdfImage.height / window.devicePixelRatio);
   canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
 });
 
@@ -65,6 +67,8 @@ sign.addEventListener("click", () => {
   if (!sign.src) return;
   fabric.Image.fromURL(sign.src, function (image) {
     image.top = 400;
+    image.scaleX = 0.5;
+    image.scaleY = 0.5;
     canvas.add(image);
   });
 });
