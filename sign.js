@@ -66,6 +66,7 @@ if (localStorage.getItem("img")) {
 sign.addEventListener("click", () => {
   if (!sign.src) return;
   fabric.Image.fromURL(sign.src, function (image) {
+    image.top = 400;
     canvas.add(image);
   });
 });
