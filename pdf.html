@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sign</title>
+  </head>
+  <body>
+    <div>
+      <input type="file" accept="application/pdf" placeholder="選擇PDF檔案" />
+    </div>
+    <canvas id="canvas" style="border: 1px solid #000"> </canvas>
+
+    <p>選擇簽名</p>
+    <img class="sign" style="border: 1px solid #000" width="250" height="150" />
+
+    <button class="download">download PDF</button>
+    <a href="./index.html">上一頁</a>
+
+    <script src="https://unpkg.com/fabric@latest/dist/fabric.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+
+    <script src="./sign.js"></script>
+  </body>
+</html>

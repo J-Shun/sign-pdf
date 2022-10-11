@@ -1,0 +1,75 @@
+const canvas = document.querySelector("#canvas");
+const ctx = canvas.getContext("2d");
+const clearBtn = document.querySelector(".clear");
+const saveBtn = document.querySelector(".save");
+const showImage = document.querySelector(".show-img");
+console.log(showImage);
+
+// 確認滑鼠 / 手指是否按下
+let isPainting = false;
+
+// 下2行設定線條的相關數值
+ctx.lineWidth = 4;
+ctx.lineCap = "round";
+
+// 取得滑鼠在畫布上的位置
+function getMousePosition(e) {
+  const canvasSize = canvas.getBoundingClientRect();
+  return {
+    x: e.clientX - canvasSize.left,
+    y: e.clientY - canvasSize.top,
+  };
+}
+
+// 開始繪圖時，將狀態開啟
+function startPosition(e) {
+  e.preventDefault();
+  isPainting = true;
+}
+
+// 結束繪圖時，將狀態關閉，並產生新路徑
+function finishedPosition() {
+  isPainting = false;
+  ctx.beginPath();
+}
+
+// 繪圖過程
+function draw(e) {
+  e.preventDefault();
+  if (!isPainting) return;
+
+  // 取得滑鼠位置
+  const mousePosition = getMousePosition(e);
+
+  // 移動到滑鼠位置並產生圖案
+  ctx.lineTo(mousePosition.x, mousePosition.y);
+  ctx.stroke();
+}
+
+// 重新設定畫布
+function reset() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// 儲存圖片
+function saveImage() {
+  const newImg = canvas.toDataURL("image/png");
+  showImage.src = newImg;
+  localStorage.setItem("img", newImg);
+}
+
+// event listener 電腦板
+canvas.addEventListener("mousedown", startPosition);
+canvas.addEventListener("mouseup", finishedPosition);
+canvas.addEventListener("mouseleave", finishedPosition);
+canvas.addEventListener("mousemove", draw);
+
+// event listener 手機板
+canvas.addEventListener("touchstart", startPosition);
+canvas.addEventListener("touchend", finishedPosition);
+canvas.addEventListener("touchcancel", finishedPosition);
+canvas.addEventListener("touchmove", draw);
+
+// 重設按鈕
+clearBtn.addEventListener("click", reset);
+saveBtn.addEventListener("click", saveImage);
