@@ -52,9 +52,7 @@ document.querySelector("input").addEventListener("change", async (e) => {
   const pdfImage = await pdfToImage(pdfData);
   canvas.setWidth(pdfImage.width);
   canvas.setHeight(pdfImage.height);
-  console.log(canvas);
   canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
-  console.log(canvas);
 });
 
 // 加入簽名
@@ -76,6 +74,8 @@ const pdf = new jsPDF();
 const download = document.querySelector(".download");
 download.addEventListener("click", () => {
   const image = canvas.toDataURL("image/png");
-  pdf.addImage(image, "png", 0, 0);
+  const width = pdf.internal.pageSize.width;
+  const height = pdf.internal.pageSize.height;
+  pdf.addImage(image, "png", 0, 0, width, height);
   pdf.save("download.pdf");
 });
