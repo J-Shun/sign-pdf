@@ -46,7 +46,7 @@ function draw(e) {
   e.preventDefault();
   if (!isPainting) return;
 
-  // 取得滑鼠位置
+  // 取得滑鼠 / 手指位置
   const paintPosition = getPaintPosition(e);
 
   // 移動到滑鼠位置並產生圖案
